@@ -90,7 +90,7 @@ while True:
         elif pos_x >= limite_up_x - size_x:
             pos_x = int(limite_up_x - size_x)
 
-        if duree_bord_atteind > 5:
+        if duree_bord_atteind > 5:#On reste 5 secondes sur le bord de l'image
             sens_deplacement_x = -sens_deplacement_x
             bord_atteind_x = False
             bord_atteind_x_debut = True
@@ -105,7 +105,7 @@ while True:
         direction_lecture = -direction_lecture
         sens_lecture = -sens_lecture
 
-    if duree_lecture_changement > 0.5:
+    if duree_lecture_changement > 0.5:#Permet de limiter les changements de sens de lecture
 
         # Tirage tête de lecture
         tirage_sens_lecture = tirage(probabilite_sens)
