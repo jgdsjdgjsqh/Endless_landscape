@@ -1,5 +1,5 @@
 import cv2
-from choix_2vinc import tirage
+from choix import tirage
 import time
 from random import randint
 
