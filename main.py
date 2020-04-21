@@ -1,3 +1,4 @@
+import os
 import cv2
 import time
 from random import randint
@@ -8,11 +9,11 @@ from deplacement_tete_de_lecture import deplacement_t
 
 #On lit le fichier de configuration:
 config = configparser.ConfigParser()
-config.read("/home/simon/PycharmProjects/endless_landscape/config.ini")
+config.read(os.path.join(os.path.dirname(__file__), "config.ini"))
 
 #On vérifie que le fichier n'est pas vide
 if config.sections() == []:
-    print("!!!! Le fichier config n'arrive pas a etre lu ou est vide !!!\nVerifier le chemin d'acces ligne 11")
+    print("!!!! Le fichier config n'arrive pas a etre lu ou est vide !!!!")
 
 
 """On initialise différentes valeurs à partir du fichier de configuration:"""
