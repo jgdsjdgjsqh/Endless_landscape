@@ -14,8 +14,8 @@ config.read("/home/simon/PycharmProjects/endless_landscape/config.ini")
 if config.sections() == []:
     print("!!!! Le fichier config n'arrive pas a etre lu ou est vide !!!\nVerifier le chemin d'acces ligne 11")
 
-#On initialise différentes valeurs à partir du fichier de configuration:
 
+"""On initialise différentes valeurs à partir du fichier de configuration:"""
 #Pour la vidéo d'origine:
 limitation_nombre_de_frame = config.getint("input_video", "limitation_nombre_de_frame")
 path = config.get("input_video", "path")
@@ -46,10 +46,10 @@ output_file = config.get("output_video", "output_file")
 codec = config.get("output_video", "codec")
 framerate = config.getint("output_video", "framerate")
 
-#Fin de l'importation de paramètres
+"""  Fin de l'importation de paramètres  """
 
 
-#Préparation de la video
+"""  Préparation de la video  """
 #On crée une liste pour mettre les images en buffer afin de pouvoir les utiliser plus rapidement
 frame_list = []
 
@@ -153,10 +153,10 @@ debut_bord_x = time.time()          #Permet de calculer la durée que reste le c
 debut_bord_y = time.time()          #Permet de calculer la durée que reste le cadre ur le bord de l'image en y
 
 
-"""Fin de l'initialisation"""
+"""   Fin de l'initialisation   """
 
 
-"""Début de la boucle infini de choix d'image et d'affichage"""
+"""   Début de la boucle infini de choix d'image et d'affichage   """
 
 
 while True:
