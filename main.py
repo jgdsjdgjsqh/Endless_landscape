@@ -19,7 +19,7 @@ if config.sections() == []:
 """On initialise différentes valeurs à partir du fichier de configuration:"""
 #Pour la vidéo d'origine:
 limitation_nombre_de_frame = config.getint("input_video", "limitation_nombre_de_frame")
-path = config.get("input_video", "path")
+path = config.get("input_video", "video")
 
 #Pour le cadre:
 deplacement_cadre = config.getboolean("cadre", "deplacement_cadre")
@@ -53,6 +53,10 @@ framerate = config.getint("output_video", "framerate")
 """  Préparation de la video  """
 #On crée une liste pour mettre les images en buffer afin de pouvoir les utiliser plus rapidement
 frame_list = []
+
+#Si le chemin n'est pas absolu, on le complete pour qu'il le soit
+if not os.path.isabs(path):
+    path = os.path.join(os.path.dirname(__file__), path)
 
 #on  récupère la vidéo a l'aide du chemin fourni
 cap = cv2.VideoCapture(path)
