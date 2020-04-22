@@ -115,10 +115,12 @@ temps_restant_bord_x = randint(temps_min_x, temps_max_x)
 temps_restant_bord_y = randint(temps_min_y, temps_max_y)
 
 if enregistrement:#Création de la vidéo de sortie (l'enregistrement), vide pour le moment, on ajoute les images apres
-    if codec == "MJPG":
-        video_output = cv2.VideoWriter(output_file, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), framerate, (size_x, size_y))
-        if video_output.isOpened():
-            print("L'objet vidéo a bien été initialisée")
+    codec = cv2.VideoWriter_fourcc(codec[0], codec[1], codec[2], codec[3])
+    video_output = cv2.VideoWriter(output_file, codec, framerate, (size_x, size_y))
+    if video_output.isOpened():
+        print("L'objet vidéo a bien été initialisée")
+    else:
+        print("!!!! L'objet vidéo n'a pas pu etre initialisée !!!!")
 
 """Sens  lecture (ou sens_deplacement) correspond au sens dans lequel la tete de lecture (ou le cadre) va 
 effectivement se déplacer tandis que direction_lecture (ou direction_deplacement) indique la direction privilégiée 
