@@ -31,4 +31,8 @@ def deplacement_t(temps_lecture, lecture, nombre_de_frame, direction_lecture,
                         temps_lecture = time.time()
 
         lecture = lecture + sens_lecture
+        if lecture <= 0:
+                lecture = 0
+        elif lecture >= nombre_de_frame - 1:
+                lecture = nombre_de_frame - 1
         return lecture, sens_lecture, direction_lecture, temps_lecture
