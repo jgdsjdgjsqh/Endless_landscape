@@ -15,6 +15,11 @@ def deplacement_t(temps_lecture, lecture, nombre_de_frame, direction_lecture,
         if lecture == 0 or lecture == nombre_de_frame - 1:
                 direction_lecture = -direction_lecture
                 sens_lecture = -sens_lecture
+                if lecture <= 0:
+                        lecture = 0
+                elif lecture >= nombre_de_frame - 1:
+                        lecture = nombre_de_frame -1
+
 
         if duree_lecture_changement > temps_min_changement_t:
 
