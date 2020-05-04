@@ -9,11 +9,12 @@ from cadre_automatique import deplacement_automatique_x_y
 from config import *
 import os
 
+
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
 pygame.display.set_caption("endless_landscape")
 screen = pygame.display.set_mode((350, 200), pygame.NOFRAME)
-pygame.display.update()
+#pygame.display.update()
 
 """  Préparation de la video  """
 #On crée une liste pour mettre les images en buffer afin de pouvoir les utiliser plus rapidement
@@ -149,84 +150,25 @@ debut_bord_y = time.time()          #Permet de calculer la durée que reste le c
 """   Fin de l'initialisation   """
 
 
-"""   Début de la boucle infini de choix d'image et d'affichage   """
-
-
-
-
-
-
-screen = pygame.display.set_mode((size_x, size_y))
-#pygame.display.toggle_fullscreen()
 modes = pygame.display.list_modes()
+accroche_x = (modes[0][0] - size_x) / 2
+accroche_y = (modes[0][1] - size_y) / 2
 print(modes)
+screen = pygame.display.set_mode((size_x, size_y))
 if fullscreen:
-    pygame.display.set_mode((size_x, size_y), pygame.FULLSCREEN)
+    pygame.display.set_mode(modes[0], pygame.FULLSCREEN)
 pygame.key.set_repeat(100, 100)
-FONT = pygame.font.Font(None, 40)
 
-BG_COLOR = pygame.Color('gray12')
-GREEN = pygame.Color('lightseagreen')
-
-
-def create_key_list(input_map):
-    """A list of surfaces of the action names + assigned keys, rects and the actions."""
-    key_list = []
-    for y, (action, value) in enumerate(input_map.items()):
-        surf = FONT.render('{}: {}'.format(action, pygame.key.name(value)), True, GREEN)
-        rect = surf.get_rect(topleft=(40, y*40+20))
-        key_list.append([surf, rect, action])
-    return key_list
-
-
-def assignment_menu(input_map):
-    """Allow the user to change the key assignments in this menu.
-
-    The user can click on an action-key pair to select it and has to press
-    a keyboard key to assign it to the action in the `input_map` dict.
-    """
-    selected_action = None
-    key_list = create_key_list(input_map)
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-            elif event.type == pygame.KEYDOWN:
-                if selected_action is not None:
-                    # Assign the pygame key to the action in the input_map dict.
-                    input_map[selected_action] = event.key
-                    key_config.set('keyboard input', selected_action, str(event.key))
-                    selected_action = None
-                    # Need to re-render the surfaces.
-                    key_list = create_key_list(input_map)
-                    with open(os.path.join(os.path.dirname(__file__), "key.ini"), "w") as f:
-                        key_config.write(f)
-                if event.key == pygame.K_F1:  # Leave the menu.
-                    # Return the updated input_map dict to the main function.
-                    return input_map
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                selected_action = None
-                for surf, rect, action in key_list:
-                    # See if the user clicked on one of the rects.
-                    if rect.collidepoint(event.pos):
-                        selected_action = action
-
-        screen.fill(BG_COLOR)
-        # Blit the action-key table. Draw a rect around the
-        # selected action.
-        for surf, rect, action in key_list:
-            screen.blit(surf, rect)
-            if selected_action == action:
-                pygame.draw.rect(screen, GREEN, rect, 2)
-
-        pygame.display.flip()
 
 arret_x = False
 arret_y = False
 
 running = True
 
+
+from keyboard_config_file_update import assignment_menu
+
+"""   Début de la boucle infini de choix d'image et d'affichage   """
 
 while running:
 
@@ -306,7 +248,10 @@ while running:
     frame = np.rot90(img)
     frame = pygame.surfarray.make_surface(frame)
     frame = pygame.transform.flip(frame, True, False)
-    screen.blit(frame, (0, 0))
+    if fullscreen:
+        screen.blit(frame, (accroche_x, accroche_y))
+    else:
+        screen.blit(frame, (0, 0))
 
     pygame.display.update()
 
@@ -317,7 +262,8 @@ while running:
                 running = False
 
             elif event.key == pygame.K_F1:
-                input_map = assignment_menu(input_map)
+                input_map = assignment_menu(input_map, screen)
+                screen.fill((0, 0, 0))
 
             elif event.key == input_map["mode_automatique_cadre"]:
                 type_deplacement_cadre = 0
