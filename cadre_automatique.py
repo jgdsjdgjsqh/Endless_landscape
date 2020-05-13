@@ -27,7 +27,7 @@ def deplacement_automatique_x_y(temps, pos, pos_reel, sens_deplacement, directio
         pos_reel += sens_deplacement * vitesse * duree
         pos = int(pos_reel)
         temps = time.time()
-        bord_atteint = (pos <= 0) or (pos >= limite_up - size)
+        bord_atteint = pos== size//2 + size%2 -1 or pos== limite_up - size//2
     else:
         if bord_atteint_debut:
             debut_bord = time.time()
@@ -35,17 +35,17 @@ def deplacement_automatique_x_y(temps, pos, pos_reel, sens_deplacement, directio
             direction_deplacement = - direction_deplacement
         duree_bord_atteint = time.time() - debut_bord
         if duree_bord_atteint > temps_restant_bord:
-            if pos == 0:
+            if pos == size//2 +size%2 -1:
                 sens_deplacement = 1
-            elif pos == limite_up - size:
+            elif pos == limite_up - size//2:
                 sens_deplacement = -1
             bord_atteint = False
             bord_atteint_debut = True
             temps_restant_bord = randint(temps_min, temps_max)
             temps = time.time()
-    if pos <= 0:
-        pos = 0
-    elif pos >= limite_up - size:
-        pos = int(limite_up - size)
+    if pos <= size//2 + size % 2 - 1:
+        pos = size//2 + size % 2 - 1
+    elif pos > limite_up - size//2:
+        pos = limite_up - size//2
     return pos, pos_reel, temps, sens_deplacement, direction_deplacement,\
            bord_atteint, bord_atteint_debut, temps_restant_bord, debut_bord, temps_changement
