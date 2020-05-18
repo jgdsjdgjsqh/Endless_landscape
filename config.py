@@ -17,7 +17,8 @@ limitation_nombre_de_frame = config.getint("input_video", "limitation_nombre_de_
 path = config.get("input_video", "video")
 
 #Pour le cadre:
-type_deplacement_cadre = config.getint("cadre", "type_deplacement_cadre")
+manuel_auto = config.getint("cadre", "manuel_auto")
+type_deplacement_cadre = manuel_auto
 size_x = config.getint("cadre", "size_x")
 size_y = config.getint("cadre", "size_y")
 vitesse_x = config.getint("cadre", "vitesse_deplacement_x")
@@ -36,8 +37,14 @@ temps_min_changement_y = config.getint("cadre", "temps_min_changement_y")
 temps_arret_x = config.getint("cadre", "temps_arret_x")
 temps_arret_y = config.getint("cadre", "temps_arret_y")
 
+#ZOOM
+type_zoom = manuel_auto
+vzoom = config.getfloat("ZOOM", "vitesse de zoom")
+attente_min = config.getfloat("ZOOM", "attente_min")
+attente_max = config.getfloat("ZOOM", "attente_max")
+
 #Pour la tete de lecture:
-type_deplacement_tete = config.getint("tete_de_lecture", "type_deplacement_tete")
+type_deplacement_tete = manuel_auto
 probabilite_changement_sens_t = config.getfloat("tete_de_lecture", "probabilite_changement_sens_t")
 probabilite_changement_selon_direction_t = config.getfloat("tete_de_lecture", "probabilite_changement_selon_direction_t")
 temps_min_changement_t = config.getfloat("tete_de_lecture", "temps_min_changement_t")
@@ -57,7 +64,6 @@ input_map = dict(key_config.items("keyboard input"))
 for key in input_map:
     input_map[key] = int(input_map[key])
 
-print(input_map)
 """  Fin de l'importation de paramètres  """
 
 #Si le chemin n'est pas absolu, on le complète pour qu'il le soit
